@@ -1,12 +1,19 @@
 import "./App.css";
 import { BrowserRouter, Route } from "react-router-dom";
-import PostList from "../pages/PostList";
+import {PostList, Login, Signup} from "../pages";
+import { Header } from "../components";
+import { Grid } from "../elements";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Route path="/" exact component={PostList} />
-    </BrowserRouter>
+    <Grid>
+      <Header />
+      <BrowserRouter>
+        <Route path="/" exact component={PostList} />
+        <Route path="/login" exact component={Login} />
+        <Route path="/signup" exact component={Signup} />
+      </BrowserRouter>
+    </Grid>
   );
 }
 
