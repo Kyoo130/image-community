@@ -1,5 +1,9 @@
 import "./App.css";
-import { BrowserRouter, Route } from "react-router-dom";
+
+import {ConnectedRouter} from "connected-react-router";
+import { Route } from "react-router-dom";
+import {history} from "../redux/configureStore";
+
 import {PostList, Login, Signup} from "../pages";
 import { Header } from "../components";
 import { Grid } from "../elements";
@@ -8,11 +12,11 @@ function App() {
   return (
     <Grid>
       <Header />
-      <BrowserRouter>
+      <ConnectedRouter history={history}>
         <Route path="/" exact component={PostList} />
         <Route path="/login" exact component={Login} />
         <Route path="/signup" exact component={Signup} />
-      </BrowserRouter>
+      </ConnectedRouter>
     </Grid>
   );
 }

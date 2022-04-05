@@ -1,12 +1,15 @@
 import React from "react";
 import { Button, Grid, Input, Text } from "../elements";
-import {setCookie} from "../shared/Cookie";
+
+import { useDispatch } from "react-redux";
+import { actionCreators as userActions } from "../redux/modules/user";
 
 const Login = () => {
+  const dispatch = useDispatch();
+
   const login = () => {
-    setCookie("user_id", "ccou", 3);
-    setCookie("user_pwd", "asdf1234", 3);
-  }
+    dispatch(userActions.loginAction({ user_name: "ccou" }));
+  };
 
   return (
     <>
