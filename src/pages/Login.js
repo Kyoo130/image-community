@@ -1,7 +1,13 @@
 import React from "react";
 import { Button, Grid, Input, Text } from "../elements";
+import {setCookie} from "../shared/Cookie";
 
 const Login = () => {
+  const login = () => {
+    setCookie("user_id", "ccou", 3);
+    setCookie("user_pwd", "asdf1234", 3);
+  }
+
   return (
     <>
       <Grid padding="16px">
@@ -30,6 +36,7 @@ const Login = () => {
           text="로그인하기"
           _onClick={() => {
             console.log("로그인 버튼 클릭!");
+            login();
           }}
         />
       </Grid>
