@@ -27,7 +27,7 @@ const Header = () => {
           <Button
             text="로그아웃"
             _onClick={() => {
-              dispatch(userActions.logOut({}));
+              dispatch(userActions.logoutFB());
             }}
           />
         </Grid>
