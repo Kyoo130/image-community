@@ -5,9 +5,9 @@ import { ConnectedRouter } from "connected-react-router";
 import { Route } from "react-router-dom";
 import { history } from "../redux/configureStore";
 
-import {PostList, Login, Signup, PostWrite, PostDetail} from "../pages";
+import { PostList, Login, Signup, PostWrite, PostDetail } from "../pages";
 import { Header } from "../components";
-import {Button, Grid} from "../elements";
+import { Button, Grid } from "../elements";
 import Permit from "./Permit";
 
 import { useDispatch } from "react-redux";
@@ -39,7 +39,13 @@ function App() {
         </ConnectedRouter>
       </Grid>
       <Permit>
-        <Button is_float text="+" _onClick={() => {history.push("/write")}}/>
+        <Button
+          is_float
+          text="+"
+          _onClick={() => {
+            history.push("/write");
+          }}
+        />
       </Permit>
     </>
   );
