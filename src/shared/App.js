@@ -5,14 +5,15 @@ import { ConnectedRouter } from "connected-react-router";
 import { Route } from "react-router-dom";
 import { history } from "../redux/configureStore";
 
-import { PostList, Login, Signup, PostWrite, PostDetail } from "../pages";
+import { useDispatch } from "react-redux";
+import { actionCreators as userActions } from "../redux/modules/user";
+import { apiKey } from "./firebase";
+
+import { PostList, Login, Signup, PostWrite, PostDetail, Notification } from "../pages";
 import { Header } from "../components";
 import { Button, Grid } from "../elements";
 import Permit from "./Permit";
 
-import { useDispatch } from "react-redux";
-import { actionCreators as userActions } from "../redux/modules/user";
-import { apiKey } from "./firebase";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,7 +36,9 @@ function App() {
           <Route path="/login" exact component={Login} />
           <Route path="/signup" exact component={Signup} />
           <Route path="/write" exact component={PostWrite} />
+          <Route path="/write/:id" exact component={PostWrite} />
           <Route path="/post/:id" exact component={PostDetail} />
+          <Route path="/noti" exact component={Notification} />
         </ConnectedRouter>
       </Grid>
       <Permit>
