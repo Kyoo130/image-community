@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const Grid = (props) => {
-  const { is_flex, width, padding, margin, bg, center, children } = props;
+  const { is_flex, width, padding, margin, bg, center, _onClick, children } = props;
   const styles = {
     is_flex: is_flex,
     width: width,
@@ -13,7 +13,7 @@ const Grid = (props) => {
   };
   return (
     <>
-      <GirdBox {...styles}>{children}</GirdBox>
+      <GirdBox {...styles} onClick={_onClick}>{children}</GirdBox>
     </>
   );
 };
@@ -26,6 +26,7 @@ Grid.defaultProps = {
   margin: false,
   bg: false,
   center: false,
+  _onClick: () => {}
 };
 
 const GirdBox = styled.div`
