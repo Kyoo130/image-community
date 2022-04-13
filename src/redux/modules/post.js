@@ -12,7 +12,10 @@ const EDIT_POST = "EDIT_POST";
 const LOADING = "LOADING";
 
 // action creators
-const setPost = createAction(SET_POST, (post_list, paging) => ({ post_list, paging }));
+const setPost = createAction(SET_POST, (post_list, paging) => ({
+  post_list,
+  paging,
+}));
 const addPost = createAction(ADD_POST, (post) => ({ post }));
 const editPost = createAction(EDIT_POST, (post_id, post) => ({
   post_id,
@@ -142,11 +145,10 @@ const addPostFB = (contents = "") => {
 
 const getPostFB = (start = null, size = 3) => {
   return function (dispatch, getState, { history }) {
-
     let _paging = getState().post.paging;
 
-    if(_paging.start && !_paging.next){
-      console.log("불러올 데이터가 없습니다.")
+    if (_paging.start && !_paging.next) {
+      console.log("불러올 데이터가 없습니다.");
       return;
     }
 
@@ -197,13 +199,49 @@ const getPostFB = (start = null, size = 3) => {
   };
 };
 
+const getOnePostFB = (id) => {
+  return function (dispatch, getState, { history }) {
+    const postDB = firestore.collection("post");
+    postDB
+      .doc(id)
+      .get()
+      .then((doc) => {
+        let _post = doc.data();
+        let post = Object.keys(_post).reduce(
+          (acc, cur) => {
+            if (cur.indexOf("user_") !== -1) {
+              return {
+                ...acc,
+                user_info: { ...acc.user_info, [cur]: _post[cur] },
+              };
+            }
+            return { ...acc, [cur]: _post[cur] };
+          },
+          { id: doc.id, user_info: {} }
+        );
+        dispatch(setPost([post]));
+      });
+  };
+};
+
 // reducer
 export default handleActions(
   {
     [SET_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.list.push(...action.payload.post_list);
-        draft.paging = action.payload.paging;
+        draft.list = draft.list.reduce((acc, cur) => {
+          if (acc.findIndex((a) => a.id === cur.id) === -1) {
+            return [...acc, cur];
+          } else {
+            acc[acc.findIndex((a) => a.id === cur.id)] = cur;
+            return acc;
+          }
+        }, []);
+
+        if (action.payload.paging) {
+          draft.paging = action.payload.paging;
+        }
         draft.is_loading = false;
       }),
     [ADD_POST]: (state, action) =>
@@ -227,9 +265,11 @@ export default handleActions(
 const actionCreators = {
   setPost,
   addPost,
+  editPost,
   getPostFB,
   addPostFB,
   editPostFB,
+  getOnePostFB,
 };
 
 export { actionCreators };
