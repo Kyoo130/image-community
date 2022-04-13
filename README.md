@@ -1,70 +1,101 @@
-# Getting Started with Create React App
+# Image Community Project
+---
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### 📝 개요
 
-## Available Scripts
++ 이미지와 함께 게시글을 공유하며, 소통할 수 있는 SNS 커뮤니티 서비스 입니다.
 
-In the project directory, you can run:
+<br/>
 
-### `yarn start`
+### 💻 사용 기술
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
++ React
++ Firebase
++ redux
++ redux-thunk
++ redux-actions
++ immer
++ moment
++ lodash
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+<br/>
 
-### `yarn test`
+### 🏚 개발 환경
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
++ OS : Mac
++ Front-End : React
++ IDE : IntelliJ
++ Platform : PC Web
++ Test Browser : Chrome v.100.0.4896.60
++ Test Device : iPhone 13 Pro
 
-### `yarn build`
+<br/>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 🔗 배포 URL
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
++ 현재 개발 중으로 아직 배포 전 입니다.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<br/>
 
-### `yarn eject`
+### 💬 구현 기능
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
++ 회원가입, 로그인 기능 개발
++ 게시글 CRUD 기능 개발
++ 댓글 작성 삭제 기능 개발
++ 댓글 알림 기능 개발
++ Redux 액션, 액션 생성 함수, 리듀서, 미들웨어 코드 개발
++ Redux 스토어 코드 개발
++ Firebase 서버 연결 코드 개발
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<br/>
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 📂 프로젝트 구조
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+```bash
+.src
+├── App.test.js
+├── components
+│   ├── Card.js
+│   ├── CommentList.js
+│   ├── CommentWrite.js
+│   ├── Header.js
+│   ├── Post.js
+│   └── index.js
+├── elements
+│   ├── Button.js
+│   ├── Grid.js
+│   ├── Image.js
+│   ├── Input.js
+│   ├── Spinner.js
+│   ├── Text.js
+│   └── index.js
+├── index.css
+├── index.js
+├── logo.svg
+├── pages
+│   ├── Login.js
+│   ├── Notification.js
+│   ├── PostDetail.js
+│   ├── PostList.js
+│   ├── PostWrite.js
+│   ├── Signup.js
+│   └── index.js
+├── redux
+│   ├── configureStore.js
+│   └── modules
+│       ├── comment.js
+│       ├── image.js
+│       ├── post.js
+│       └── user.js
+├── reportWebVitals.js
+├── setupTests.js
+└── shared
+    ├── App.css
+    ├── App.js
+    ├── Cookie.js
+    ├── InfinityScroll.js
+    ├── Permit.js
+    ├── Upload.js
+    ├── common.js
+    └── firebase.js
+```

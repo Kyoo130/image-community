@@ -3,13 +3,18 @@ import styled from "styled-components";
 import { Text, Grid } from "./index";
 
 const Input = (props) => {
-  const { label, placeholder, type, value, _onChange, multiLine } = props;
+  const { label, placeholder, type, value, _onChange, is_submit, onSubmit, multiLine } = props;
 
   if (multiLine) {
     return (
       <Grid>
         {label && <Text margin="0">{label}</Text>}
-        <ELTextarea value={value} rows={10} placeholder={placeholder} onChange={_onChange} />
+        <ELTextarea
+          value={value}
+          rows={10}
+          placeholder={placeholder}
+          onChange={_onChange}
+        />
       </Grid>
     );
   }
@@ -17,7 +22,21 @@ const Input = (props) => {
   return (
     <Grid>
       {label && <Text margin="0px">{label}</Text>}
-      <ElInput type={type} placeholder={placeholder} onChange={_onChange} />
+      {is_submit ? (
+        <ElInput
+          type={type}
+          placeholder={placeholder}
+          onChange={_onChange}
+          value={value}
+          onKeyPress={(e) => {
+            if(e.key === "Enter"){
+              onSubmit(e);
+            }
+          }}
+        />
+      ) : (
+        <ElInput type={type} placeholder={placeholder} onChange={_onChange} />
+      )}
     </Grid>
   );
 };
@@ -28,6 +47,8 @@ Input.defaultProps = {
   placeholder: "텍스트를 입력해 주세요.",
   type: "text",
   value: "",
+  is_submit: false,
+  onSubmit: () => {},
   _onChange: () => {},
 };
 
