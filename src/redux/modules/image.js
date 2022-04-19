@@ -17,7 +17,7 @@ const setPreview = createAction(SET_PREVIEW, (preview) => ({ preview }));
 const initialState = {
   image_url: "",
   uploading: false,
-  preview: false,
+  preview: null,
 };
 
 // middleware actions

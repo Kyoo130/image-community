@@ -39,7 +39,7 @@ const addCommentFB = (post_id, contents) => {
       user_id: user_info.uid,
       user_name: user_info.user_name,
       user_profile: user_info.user_profile,
-      user_contents: contents,
+      contents: contents,
       insert_dt: moment().format("YYYY-MM-DD hh:mm:ss"),
     };
 

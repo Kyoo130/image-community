@@ -2,30 +2,33 @@ import React from "react";
 import styled from "styled-components";
 
 const Image = (props) => {
-  const {shape, src, size} = props;
-  const styles = {
-    src: src,
-    size: size,
-  };
+    const {shape, src, size} = props;
 
-  if (shape === "circle") {
-    return <ImageCircle {...styles} />;
-  }
+    const styles = {
+        src: src,
+        size: size,
+    }
 
-  if (shape === "rectangle") {
+    if(shape === "circle"){
+        return (
+            <ImageCircle {...styles} />
+        )
+    }
+
+    if(shape === "rectangle"){
+        return (
+            <AspectOuter>
+                <AspectInner {...styles} />
+            </AspectOuter>
+        )
+    }
+
     return (
-      <AspectOuter>
-        <AspectInner {...styles} />
-      </AspectOuter>
-    );
-  }
-
-  return (
-    <>
-      <ImageDefault {...styles} />
-    </>
-  );
-};
+        <>
+            <ImageDefault {...styles} />
+        </>
+    )
+}
 
 Image.defaultProps = {
   shape: "circle",
@@ -39,7 +42,7 @@ const ImageDefault = styled.div`
   height: var(--size);
   background-image: url("${(props) => props.src}");
   background-size: cover;
-`
+`;
 
 const AspectOuter = styled.div`
   width: 100%;
@@ -47,22 +50,22 @@ const AspectOuter = styled.div`
 `;
 
 const AspectInner = styled.div`
-  position: relative;
-  padding-top: 75%;
-  overflow: hidden;
-  background-image: url("${(props) => props.src}");
-  background-size: cover;
+    position: relative;
+    padding-top: 75%;
+    overflow: hidden;
+    background-image: url("${(props) => props.src}");
+    background-size: cover;
 `;
 
 const ImageCircle = styled.div`
-  --size: ${(props) => props.size}px;
-  width: var(--size);
-  height: var(--size);
-  border-radius: var(--size);
+    --size: ${(props) => props.size}px;
+    width: var(--size);
+    height: var(--size);
+    border-radius: var(--size);
 
-  background-image: url("${(props) => props.src}");
-  background-size: cover;
-  margin: 4px;
+    background-image: url("${(props) => props.src}");
+    background-size: cover;
+    margin: 4px;
 `;
 
 export default Image;

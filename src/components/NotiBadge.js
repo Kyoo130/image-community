@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Badge } from "@material-ui/core";
-import { Notifications } from "@material-ui/icons";
+import NotificationsIcon from "@material-ui/icons/Notifications";
+
 import { realtime } from "../shared/firebase";
 import { useSelector } from "react-redux";
 
 const NotiBadge = (props) => {
   const [is_read, setIsRead] = useState(true);
-  const user_Id = useSelector((state) => state.user.user.uid);
-
+  const user_id = useSelector((state) => state.user.user.uid);
   const notiCheck = () => {
-    const notiDB = realtime.ref(`noti/${user_Id}`);
+    const notiDB = realtime.ref(`noti/${user_id}`);
     notiDB.update({ read: true });
     props._onClick();
   };
 
   useEffect(() => {
-    const notiDB = realtime.ref(`noti/${user_Id}`);
+    const notiDB = realtime.ref(`noti/${user_id}`);
+
     notiDB.on("value", (snapshot) => {
       console.log(snapshot.val());
       setIsRead(snapshot.val().read);
@@ -31,7 +32,7 @@ const NotiBadge = (props) => {
         invisible={is_read}
         onClick={notiCheck}
       >
-        <Notifications />
+        <NotificationsIcon />
       </Badge>
     </>
   );

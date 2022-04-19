@@ -1,17 +1,27 @@
 import React from "react";
 import styled from "styled-components";
+
 import { Text, Grid } from "./index";
 
 const Input = (props) => {
-  const { label, placeholder, type, value, _onChange, is_submit, onSubmit, multiLine } = props;
+  const {
+    label,
+    placeholder,
+    _onChange,
+    type,
+    multiLine,
+    value,
+    is_submit,
+    onSubmit,
+  } = props;
 
   if (multiLine) {
     return (
       <Grid>
-        {label && <Text margin="0">{label}</Text>}
-        <ELTextarea
-          value={value}
+        {label && <Text margin="0px">{label}</Text>}
+        <ElTextarea
           rows={10}
+          value={value}
           placeholder={placeholder}
           onChange={_onChange}
         />
@@ -20,31 +30,33 @@ const Input = (props) => {
   }
 
   return (
-    <Grid>
-      {label && <Text margin="0px">{label}</Text>}
-      {is_submit ? (
-        <ElInput
-          type={type}
-          placeholder={placeholder}
-          onChange={_onChange}
-          value={value}
-          onKeyPress={(e) => {
-            if(e.key === "Enter"){
-              onSubmit(e);
-            }
-          }}
-        />
-      ) : (
-        <ElInput type={type} placeholder={placeholder} onChange={_onChange} />
-      )}
-    </Grid>
+    <>
+      <Grid>
+        {label && <Text margin="0px">{label}</Text>}
+        {is_submit ? (
+          <ElInput
+            type={type}
+            placeholder={placeholder}
+            onChange={_onChange}
+            value={value}
+            onKeyPress={(e) => {
+              if (e.key === "Enter") {
+                onSubmit(e);
+              }
+            }}
+          />
+        ) : (
+          <ElInput type={type} placeholder={placeholder} onChange={_onChange} />
+        )}
+      </Grid>
+    </>
   );
 };
 
 Input.defaultProps = {
   multiLine: false,
   label: false,
-  placeholder: "텍스트를 입력해 주세요.",
+  placeholder: "텍스트를 입력해주세요.",
   type: "text",
   value: "",
   is_submit: false,
@@ -52,14 +64,14 @@ Input.defaultProps = {
   _onChange: () => {},
 };
 
-const ElInput = styled.input`
+const ElTextarea = styled.textarea`
   border: 1px solid #212121;
   width: 100%;
   padding: 12px 4px;
   box-sizing: border-box;
 `;
 
-const ELTextarea = styled.textarea`
+const ElInput = styled.input`
   border: 1px solid #212121;
   width: 100%;
   padding: 12px 4px;

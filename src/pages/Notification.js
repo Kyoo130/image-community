@@ -1,34 +1,38 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Grid, Image, Text } from "../elements";
 import { Card } from "../components";
 
-import {realtime} from "../shared/firebase";
-import {useSelector} from "react-redux";
+import { realtime } from "../shared/firebase";
+import { useSelector } from "react-redux";
 
 const Notification = (props) => {
-  const user = useSelector(state => state.user.user);
+  const user = useSelector((state) => state.user.user);
   const [noti, setNoti] = useState([]);
 
   useEffect(() => {
-    if(!user){
+    if (!user) {
       return;
     }
-    
+
     const notiDB = realtime.ref(`noti/${user.uid}/list`);
 
     const _noti = notiDB.orderByChild("insert_dt");
 
-    _noti.once("value", snapshot => {
-      if(snapshot.exists()){
+    _noti.once("value", (snapshot) => {
+      if (snapshot.exists()) {
         let _data = snapshot.val();
-        let _noti_list = Object.keys(_data).reverse().map(s => {
-          return _data[s];
-        })
-        console.log(_noti_list)
+
+        let _noti_list = Object.keys(_data)
+          .reverse()
+          .map((s) => {
+            return _data[s];
+          });
+
+        console.log(_noti_list);
         setNoti(_noti_list);
       }
-    })
-  }, [user])
+    });
+  }, [user]);
 
   return (
     <>
