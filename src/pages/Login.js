@@ -48,6 +48,9 @@ const Login = () => {
             _onChange={(e) => {
               setPwd(e.target.value);
             }}
+            value={pwd}
+            is_submit
+            onSubmit={login}
           />
         </Grid>
         <Button text="로그인하기" _onClick={login} />
