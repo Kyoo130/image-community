@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Grid, Text, Button, Image, Input } from "../elements";
 import Upload from "../shared/Upload";
 
@@ -13,20 +13,23 @@ const PostWrite = (props) => {
   const post_list = useSelector((state) => state.post.list);
 
   const post_id = props.match.params.id;
-
-  let _post = !!post_id ? post_list.find((p) => p.id === post_id) : null;
+  const is_edit = !!post_id;
 
   const { history } = props;
-  const [contents, setContents] = useState(_post ? _post.contents : "");
+
+  let _post = is_edit ? post_list.find((p) => p.id === post_id) : null;
+
+  const [contents, setContents] = React.useState(_post ? _post.contents : "");
 
   useEffect(() => {
-    if (!!post_id && !_post) {
-      console.log("포스트 정보가 없습니다.");
+    if (is_edit && !_post) {
+      console.log("포스트 정보가 없어요!");
       history.goBack();
 
       return;
     }
-    if (!!post_id) {
+
+    if (is_edit) {
       dispatch(imageActions.setPreview(_post.image_url));
     }
   }, []);
@@ -38,6 +41,7 @@ const PostWrite = (props) => {
   const addPost = () => {
     dispatch(postActions.addPostFB(contents));
   };
+
   const editPost = () => {
     dispatch(postActions.editPostFB(post_id, { contents: contents }));
   };
@@ -64,21 +68,24 @@ const PostWrite = (props) => {
     <>
       <Grid padding="16px">
         <Text margin="0px" size="36px" bold>
-          {!!post_id ? "게시글 수정" : "게시글 작성"}
+          {is_edit ? "게시글 수정" : "게시글 작성"}
         </Text>
         <Upload />
       </Grid>
+
       <Grid>
         <Grid padding="16px">
           <Text margin="0px" size="24px" bold>
             미리보기
           </Text>
         </Grid>
+
         <Image
           shape="rectangle"
           src={preview ? preview : "http://via.placeholder.com/400x300"}
         />
       </Grid>
+
       <Grid padding="16px">
         <Input
           value={contents}
@@ -88,8 +95,9 @@ const PostWrite = (props) => {
           multiLine
         />
       </Grid>
+
       <Grid padding="16px">
-        {!!post_id ? (
+        {is_edit ? (
           <Button text="게시글 수정" _onClick={editPost} />
         ) : (
           <Button text="게시글 작성" _onClick={addPost} />

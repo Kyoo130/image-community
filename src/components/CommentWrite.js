@@ -1,20 +1,21 @@
 import React, { useState } from "react";
-import { Button, Grid, Input } from "../elements";
+import { Grid, Input, Button } from "../elements";
+
 import { actionCreators as commentActions } from "../redux/modules/comment";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const CommentWrite = (props) => {
   const dispatch = useDispatch();
   const [comment_text, setCommentText] = useState();
-  const {post_id} = props;
+
+  const { post_id } = props;
 
   const onChange = (e) => {
     setCommentText(e.target.value);
   };
 
   const write = () => {
-    console.log(comment_text);
-    dispatch(commentActions.addCommentFB(post_id, comment_text))
+    dispatch(commentActions.addCommentFB(post_id, comment_text));
     setCommentText("");
   };
 

@@ -1,5 +1,5 @@
 import { createAction, handleActions } from "redux-actions";
-import produce from "immer";
+import { produce } from "immer";
 
 import { setCookie, getCookie, deleteCookie } from "../../shared/Cookie";
 import { auth } from "../../shared/firebase";
@@ -19,10 +19,6 @@ const setUser = createAction(SET_USER, (user) => ({ user }));
 const initialState = {
   user: null,
   is_login: false,
-};
-
-const user_initial = {
-  user_name: "kyoo130",
 };
 
 // middleware actions

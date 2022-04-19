@@ -1,21 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Grid, Image, Text } from "../elements";
 import { Card } from "../components";
 
+import { realtime } from "../shared/firebase";
+import { useSelector } from "react-redux";
+
 const Notification = (props) => {
-  let noti = [
-    { user_name: "kyoo1", post_id: "kyoo1", image_url: "" },
-    { user_name: "kyoo2", post_id: "kyoo2", image_url: "" },
-    { user_name: "kyoo3", post_id: "kyoo3", image_url: "" },
-    { user_name: "ddddd", post_id: "post4", image_url: "" },
-    { user_name: "eeeee", post_id: "post5", image_url: "" },
-  ];
+  const user = useSelector((state) => state.user.user);
+  const [noti, setNoti] = useState([]);
+
+  useEffect(() => {
+    if (!user) {
+      return;
+    }
+
+    const notiDB = realtime.ref(`noti/${user.uid}/list`);
+
+    const _noti = notiDB.orderByChild("insert_dt");
+
+    _noti.once("value", (snapshot) => {
+      if (snapshot.exists()) {
+        let _data = snapshot.val();
+
+        let _noti_list = Object.keys(_data)
+          .reverse()
+          .map((s) => {
+            return _data[s];
+          });
+
+        console.log(_noti_list);
+        setNoti(_noti_list);
+      }
+    });
+  }, [user]);
 
   return (
     <>
       <Grid padding="16px" bg="#EFF6FF">
-        {noti.map((n) => {
-          return <Card key={n.post_id} {...n} />;
+        {noti.map((n, idx) => {
+          return <Card key={`noti_${idx}`} {...n} />;
         })}
       </Grid>
     </>

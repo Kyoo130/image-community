@@ -1,6 +1,7 @@
 import { createAction, handleActions } from "redux-actions";
-import produce from "immer";
+import { produce } from "immer";
 import { firestore, storage } from "../../shared/firebase";
+import "moment";
 import moment from "moment";
 
 import { actionCreators as imageActions } from "./image";
@@ -61,6 +62,8 @@ const editPostFB = (post_id = null, post = {}) => {
           dispatch(editPost(post_id, { ...post }));
           history.replace("/");
         });
+
+      return;
     } else {
       const user_id = getState().user.user.uid;
       const _upload = storage
@@ -77,8 +80,8 @@ const editPostFB = (post_id = null, post = {}) => {
             postDB
               .doc(post_id)
               .update({ ...post, image_url: url })
-              .then(() => {
-                dispatch(editPost(post_id, { image_url: url }));
+              .then((doc) => {
+                dispatch(editPost(post_id, { ...post, image_url: url }));
                 history.replace("/");
               });
           })
@@ -157,7 +160,7 @@ const getPostFB = (start = null, size = 3) => {
 
     let query = postDB.orderBy("insert_dt", "desc");
 
-    if (start) {
+    if(start){
       query = query.startAt(start);
     }
 
@@ -169,12 +172,9 @@ const getPostFB = (start = null, size = 3) => {
 
         let paging = {
           start: docs.docs[0],
-          next:
-            docs.docs.length === size + 1
-              ? docs.docs[docs.docs.length - 1]
-              : null,
+          next: docs.docs.length === size+1? docs.docs[docs.docs.length -1] : null,
           size: size,
-        };
+        }
 
         docs.forEach((doc) => {
           let _post = doc.data();
@@ -200,12 +200,15 @@ const getPostFB = (start = null, size = 3) => {
 };
 
 const getOnePostFB = (id) => {
-  return function (dispatch, getState, { history }) {
+  return function(dispatch, getState, {history}){
     const postDB = firestore.collection("post");
     postDB
       .doc(id)
       .get()
       .then((doc) => {
+        console.log(doc);
+        console.log(doc.data());
+
         let _post = doc.data();
         let post = Object.keys(_post).reduce(
           (acc, cur) => {
@@ -219,31 +222,35 @@ const getOnePostFB = (id) => {
           },
           { id: doc.id, user_info: {} }
         );
+
         dispatch(setPost([post]));
       });
-  };
-};
+  }
+}
 
-// reducer
 export default handleActions(
   {
     [SET_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.list.push(...action.payload.post_list);
+
         draft.list = draft.list.reduce((acc, cur) => {
-          if (acc.findIndex((a) => a.id === cur.id) === -1) {
+          if(acc.findIndex(a => a.id === cur.id) === -1){
             return [...acc, cur];
-          } else {
+          }else{
             acc[acc.findIndex((a) => a.id === cur.id)] = cur;
             return acc;
           }
         }, []);
 
-        if (action.payload.paging) {
+
+        if(action.payload.paging){
           draft.paging = action.payload.paging;
         }
+        
         draft.is_loading = false;
       }),
+
     [ADD_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.list.unshift(action.payload.post);
@@ -251,17 +258,16 @@ export default handleActions(
     [EDIT_POST]: (state, action) =>
       produce(state, (draft) => {
         let idx = draft.list.findIndex((p) => p.id === action.payload.post_id);
+
         draft.list[idx] = { ...draft.list[idx], ...action.payload.post };
       }),
-    [LOADING]: (state, action) =>
-      produce(state, (draft) => {
+      [LOADING]: (state, action) => produce(state, (draft) => {
         draft.is_loading = action.payload.is_loading;
-      }),
+      })
   },
   initialState
 );
 
-// action creator export
 const actionCreators = {
   setPost,
   addPost,
