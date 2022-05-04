@@ -32,7 +32,7 @@ const Input = (props) => {
   return (
     <>
       <Grid>
-        {label && <Text margin="0px">{label}</Text>}
+        {label && <Text margin="0 0 10px 0">{label}</Text>}
         {is_submit ? (
           <ElInput
             type={type}
@@ -67,15 +67,21 @@ Input.defaultProps = {
 const ElTextarea = styled.textarea`
   border: 1px solid #212121;
   width: 100%;
-  padding: 12px 4px;
+  padding: 12px 8px;
   box-sizing: border-box;
+  :focus {
+    outline: 1px solid #EE7850;
+  }
 `;
 
 const ElInput = styled.input`
-  border: 1px solid #212121;
+  border: 1px solid #bdbdbd;
   width: 100%;
-  padding: 12px 4px;
+  padding: 12px 8px;
   box-sizing: border-box;
+  :focus {
+    outline: 1px solid #EE7850;
+  }
 `;
 
 export default Input;

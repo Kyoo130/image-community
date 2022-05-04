@@ -2,8 +2,9 @@ import React from "react";
 import styled from "styled-components";
 
 const Button = (props) => {
-  const { text, _onClick, is_float, margin, width, padding, children } = props;
+  const { text, bold, _onClick, is_float, margin, width, padding, children } = props;
   const styles = {
+    bold: bold,
     margin: margin,
     width: width,
     padding: padding,
@@ -27,6 +28,7 @@ const Button = (props) => {
 Button.defaultProps = {
   children: null,
   text: false,
+  bold: false,
   is_float: false,
   margin: false,
   width: "100%",
@@ -36,12 +38,18 @@ Button.defaultProps = {
 
 const ElButton = styled.button`
   width: ${(props) => props.width};
-  background-color: #212121;
+  background-color: #EE7850;
   color: #fff;
   padding: ${(props) => props.padding};
   box-sizing: border-box;
   border: none;
+  cursor: pointer;
+
   ${(props) => (props.margin ? `margin: ${props.margin};` : '')}
+  ${(props) => (props.bold ? `font-weight: bold;` : '')}
+  :hover {
+    background-color: #f4511e;
+  }
 `;
 
 const FloatButton = styled.button`
