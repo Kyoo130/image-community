@@ -65,7 +65,7 @@ Input.defaultProps = {
 };
 
 const ElTextarea = styled.textarea`
-  border: 1px solid #212121;
+  border: 1px solid #bdbdbd;
   width: 100%;
   padding: 12px 8px;
   box-sizing: border-box;
