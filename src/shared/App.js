@@ -9,10 +9,16 @@ import { useDispatch } from "react-redux";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { apiKey } from "./firebase";
 
-import { PostList, Login, Signup, PostWrite, PostDetail, Notification } from "../pages";
+import {
+  PostList,
+  Login,
+  Signup,
+  PostWrite,
+  PostDetail,
+  Notification,
+} from "../pages";
 import { Header } from "../components";
 import { Grid } from "../elements";
-
 
 function App() {
   const dispatch = useDispatch();

@@ -8,11 +8,13 @@ const Button = (props) => {
     margin: margin,
     width: width,
     padding: padding,
-  }
+  };
 
   return (
     <>
-      <ElButton {...styles} onClick={_onClick}>{text ? text : children}</ElButton>
+      <ElButton {...styles} onClick={_onClick}>
+        {text ? text : children}
+      </ElButton>
     </>
   );
 };
@@ -29,7 +31,7 @@ Button.defaultProps = {
 
 const ElButton = styled.button`
   width: ${(props) => props.width};
-  background-color: #EE7850;
+  background-color: #ee7850;
   color: #fff;
   padding: ${(props) => props.padding};
   box-sizing: border-box;
@@ -37,8 +39,8 @@ const ElButton = styled.button`
   border-radius: 4px;
   cursor: pointer;
 
-  ${(props) => (props.margin ? `margin: ${props.margin};` : '')}
-  ${(props) => (props.bold ? `font-weight: bold;` : '')}
+  ${(props) => (props.margin ? `margin: ${props.margin};` : "")}
+  ${(props) => (props.bold ? `font-weight: bold;` : "")}
   :hover {
     background-color: #f4511e;
   }

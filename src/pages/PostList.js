@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { Post } from "../components";
 import { Grid } from "../elements";
 import InfinityScroll from "../shared/InfinityScroll";

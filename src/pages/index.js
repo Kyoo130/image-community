@@ -5,4 +5,4 @@ import PostWrite from "./PostWrite";
 import PostDetail from "./PostDetail";
 import Notification from "./Notification";
 
-export {Login, PostList, Signup, PostWrite, PostDetail, Notification}
+export { Login, PostList, Signup, PostWrite, PostDetail, Notification };

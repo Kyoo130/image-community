@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Grid, Text, Button, Image, Input } from "../elements";
 import Upload from "../shared/Upload";
 
@@ -19,7 +19,7 @@ const PostWrite = (props) => {
 
   let _post = is_edit ? post_list.find((p) => p.id === post_id) : null;
 
-  const [contents, setContents] = React.useState(_post ? _post.contents : "");
+  const [contents, setContents] = useState(_post ? _post.contents : "");
 
   useEffect(() => {
     if (is_edit && !_post) {
@@ -81,10 +81,6 @@ const PostWrite = (props) => {
             shape="rectangle"
             src={preview ? preview : "http://via.placeholder.com/400x300"}
           />
-        </Grid>
-
-        <Grid padding="0 16px">
-
         </Grid>
       </Grid>
 

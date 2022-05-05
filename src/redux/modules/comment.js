@@ -61,24 +61,26 @@ const addCommentFB = (post_id, contents) => {
               })
             );
 
-            const _noti_item = realtime.ref(`noti/${post.user_info.user_id}/list`).push();
+            const _noti_item = realtime
+              .ref(`noti/${post.user_info.user_id}/list`)
+              .push();
 
-            _noti_item.set({
-              post_id: post.id,
-              user_name: comment.user_name,
-              image_url: post.image_url,
-              insert_dt: comment.insert_dt
-            }, (err) => {
-              if(err){
-                console.log("알림 저장에 실패했어요!", err);
-              }else {
-                const notiDB = realtime.ref(`noti/${post.user_info.user_id}`);
-                notiDB.update({read: false});
+            _noti_item.set(
+              {
+                post_id: post.id,
+                user_name: comment.user_name,
+                image_url: post.image_url,
+                insert_dt: comment.insert_dt,
+              },
+              (err) => {
+                if (err) {
+                  console.log("알림 저장에 실패했어요!", err);
+                } else {
+                  const notiDB = realtime.ref(`noti/${post.user_info.user_id}`);
+                  notiDB.update({ read: false });
+                }
               }
-            })
-
-
-
+            );
           }
         });
     });
@@ -116,9 +118,10 @@ export default handleActions(
       produce(state, (draft) => {
         draft.list[action.payload.post_id] = action.payload.comment_list;
       }),
-    [ADD_COMMENT]: (state, action) => produce(state, (draft) => {
-      draft.list[action.payload.post_id].unshift(action.payload.comment);
-    }),
+    [ADD_COMMENT]: (state, action) =>
+      produce(state, (draft) => {
+        draft.list[action.payload.post_id].unshift(action.payload.comment);
+      }),
     [LOADING]: (state, action) =>
       produce(state, (draft) => {
         draft.is_loading = action.payload.is_loading;

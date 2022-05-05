@@ -19,7 +19,7 @@ const deleteCookie = (name) => {
   let date = new Date("2021-01-01").toUTCString();
   console.log(date);
 
-  document.cookie = name+"=; expires="+date;
+  document.cookie = name + "=; expires=" + date;
 };
 
 export { getCookie, setCookie, deleteCookie };

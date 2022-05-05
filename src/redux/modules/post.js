@@ -33,8 +33,8 @@ const initialState = {
 
 const initialPost = {
   image_url:
-    "https://cdn.pixabay.com/photo/2016/02/10/16/37/cat-1192026_1280.jpg",
-  contents: "고양이네요!",
+    "http://via.placeholder.com/400x300",
+  contents: "Post Test!!!",
   comment_cnt: 0,
   insert_dt: moment().format("YYYY-MM-DD hh:mm:ss"),
 };
@@ -160,7 +160,7 @@ const getPostFB = (start = null, size = 3) => {
 
     let query = postDB.orderBy("insert_dt", "desc");
 
-    if(start){
+    if (start) {
       query = query.startAt(start);
     }
 
@@ -172,9 +172,12 @@ const getPostFB = (start = null, size = 3) => {
 
         let paging = {
           start: docs.docs[0],
-          next: docs.docs.length === size+1? docs.docs[docs.docs.length -1] : null,
+          next:
+            docs.docs.length === size + 1
+              ? docs.docs[docs.docs.length - 1]
+              : null,
           size: size,
-        }
+        };
 
         docs.forEach((doc) => {
           let _post = doc.data();
@@ -200,7 +203,7 @@ const getPostFB = (start = null, size = 3) => {
 };
 
 const getOnePostFB = (id) => {
-  return function(dispatch, getState, {history}){
+  return function (dispatch, getState, { history }) {
     const postDB = firestore.collection("post");
     postDB
       .doc(id)
@@ -225,8 +228,8 @@ const getOnePostFB = (id) => {
 
         dispatch(setPost([post]));
       });
-  }
-}
+  };
+};
 
 export default handleActions(
   {
@@ -235,19 +238,18 @@ export default handleActions(
         draft.list.push(...action.payload.post_list);
 
         draft.list = draft.list.reduce((acc, cur) => {
-          if(acc.findIndex(a => a.id === cur.id) === -1){
+          if (acc.findIndex((a) => a.id === cur.id) === -1) {
             return [...acc, cur];
-          }else{
+          } else {
             acc[acc.findIndex((a) => a.id === cur.id)] = cur;
             return acc;
           }
         }, []);
 
-
-        if(action.payload.paging){
+        if (action.payload.paging) {
           draft.paging = action.payload.paging;
         }
-        
+
         draft.is_loading = false;
       }),
 
@@ -261,9 +263,10 @@ export default handleActions(
 
         draft.list[idx] = { ...draft.list[idx], ...action.payload.post };
       }),
-      [LOADING]: (state, action) => produce(state, (draft) => {
+    [LOADING]: (state, action) =>
+      produce(state, (draft) => {
         draft.is_loading = action.payload.is_loading;
-      })
+      }),
   },
   initialState
 );
