@@ -22,6 +22,7 @@ const Input = (props) => {
         <ElTextarea
           rows={10}
           value={value}
+          maxLength="1000"
           placeholder={placeholder}
           onChange={_onChange}
         />
@@ -36,6 +37,7 @@ const Input = (props) => {
         {is_submit ? (
           <ElInput
             type={type}
+            maxLength="100"
             placeholder={placeholder}
             onChange={_onChange}
             value={value}
@@ -46,7 +48,12 @@ const Input = (props) => {
             }}
           />
         ) : (
-          <ElInput type={type} placeholder={placeholder} onChange={_onChange} />
+          <ElInput
+            type={type}
+            maxLength="100"
+            placeholder={placeholder}
+            onChange={_onChange}
+          />
         )}
       </Grid>
     </>
@@ -69,8 +76,9 @@ const ElTextarea = styled.textarea`
   width: 100%;
   padding: 12px 8px;
   box-sizing: border-box;
+
   :focus {
-    outline: 1px solid #EE7850;
+    outline: 1px solid #ee7850;
   }
 `;
 
@@ -79,8 +87,9 @@ const ElInput = styled.input`
   width: 100%;
   padding: 12px 8px;
   box-sizing: border-box;
+
   :focus {
-    outline: 1px solid #EE7850;
+    outline: 1px solid #ee7850;
   }
 `;
 

@@ -15,7 +15,7 @@ const CommentList = (props) => {
     }
   }, []);
 
-  if(!comment_list[post_id] || !post_id) {
+  if (!comment_list[post_id] || !post_id) {
     return null;
   }
 
@@ -31,34 +31,43 @@ const CommentList = (props) => {
 };
 
 CommentList.defaultProps = {
- post_id: null,
-}
+  post_id: null,
+};
 
 export default CommentList;
 
 const CommentItem = (props) => {
-  const { user_profile, user_name, user_id, post_id, contents, insert_dt } =
-    props;
+  const { user_name, contents, insert_dt } = props;
 
   return (
-    <Grid is_flex>
-      <Grid is_flex width="auto">
-        <Image shape="circle" />
-        <Text bold>{user_name}</Text>
+    <>
+      <Grid margin="0 0 16px 0" padding="0 0 16px 0" border_bt="1px solid #eee">
+        <Grid is_flex>
+          <Grid width="auto" margin="4px 8px 4px 0">
+            <Image shape="circle" />
+          </Grid>
+          <Grid padding="4px 0 0 0">
+            <Text margin="0" bold>
+              {user_name}
+            </Text>
+            <Text margin="4px 0" color="#767676" size="12px">
+              {insert_dt}
+            </Text>
+          </Grid>
+        </Grid>
+        <Grid padding="0 8px">
+          <Text margin="4px 0">{contents}</Text>
+        </Grid>
       </Grid>
-      <Grid is_flex margin="0 4px">
-        <Text margin="0">{contents}</Text>
-        <Text margin="0">{insert_dt}</Text>
-      </Grid>
-    </Grid>
+    </>
   );
 };
 
 CommentItem.defaultProps = {
   user_profile: "",
-  user_name: "Kyoo1",
+  user_name: "User",
   user_id: "",
   post_id: 1,
-  contents: "귀여운 고양이 네요!",
-  insert_dt: "2022-04-06 13:36:00",
+  contents: "게시글 테스트 입니다.",
+  insert_dt: "2022-04-01 00:00:00",
 };

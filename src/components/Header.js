@@ -27,7 +27,7 @@ const Header = () => {
   if (is_login && is_session) {
     return (
       <>
-        <Grid is_flex padding="16px 16px" border_bt="2px solid #EE7850">
+        <Grid is_flex padding="12px 16px" border_bt="2px solid #eee">
           <Grid
             _onClick={() => {
               history.push("/");
@@ -49,10 +49,7 @@ const Header = () => {
               <AddBoxIcon />
             </IconButton>
 
-            <IconButton
-              aria-label="Example"
-              sx={{ color: deepOrange[400] }}
-            >
+            <IconButton aria-label="Example">
               <NotiBadge
                 _onClick={() => {
                   history.push("/noti");
@@ -60,10 +57,13 @@ const Header = () => {
               />
             </IconButton>
 
-            <IconButton aria-label="Example" sx={{ color: deepOrange[400] }}
-            onClick={() => {
-              history.push("/")
-            }}>
+            <IconButton
+              aria-label="Example"
+              sx={{ color: deepOrange[400] }}
+              onClick={() => {
+                history.push("/");
+              }}
+            >
               <AccountCircleIcon />
             </IconButton>
 
@@ -84,7 +84,7 @@ const Header = () => {
 
   return (
     <>
-      <Grid is_flex padding="16px 16px" border_bt="2px solid #EE7850">
+      <Grid is_flex padding="12px 16px" border_bt="2px solid #eee">
         <Grid
           _onClick={() => {
             history.push("/");

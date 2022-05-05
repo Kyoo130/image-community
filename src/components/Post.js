@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, Image, Text } from "../elements";
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { history } from "../redux/configureStore";
 
 import EditIcon from "@mui/icons-material/Edit";
@@ -8,8 +8,8 @@ import { deepOrange } from "@mui/material/colors";
 import IconButton from "@mui/material/IconButton";
 
 const Post = (props) => {
-  const params = useParams();
-  console.log("params", params)
+  const { id } = useParams();
+  const identify = id && props.is_me;
 
   return (
     <>
@@ -20,8 +20,10 @@ const Post = (props) => {
             <Text bold>{props.user_info.user_name}</Text>
           </Grid>
           <Grid is_flex width="auto" padding="4px 8px">
-            <Text margin="0" color="#767676">{props.insert_dt}</Text>
-            {props.is_me && (
+            <Text margin="0" color="#767676">
+              {props.insert_dt}
+            </Text>
+            {identify && (
               <>
                 <IconButton
                   aria-label="Example"
@@ -42,7 +44,7 @@ const Post = (props) => {
         </Grid>
 
         <Grid padding="4px 8px">
-          <Text>{props.contents}</Text>
+          <Text pre_wrap>{props.contents}</Text>
         </Grid>
 
         <Grid padding="0 8px 16px 8px" border_bt="1px solid #eee">
@@ -57,15 +59,14 @@ const Post = (props) => {
 
 Post.defaultProps = {
   user_info: {
-    user_name: "kyoo2",
+    user_name: "user",
     user_profile:
-      "https://cdn.pixabay.com/photo/2016/02/10/16/37/cat-1192026_1280.jpg",
+      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
   },
-  image_url:
-    "https://cdn.pixabay.com/photo/2016/02/10/16/37/cat-1192026_1280.jpg",
-  contents: "고양이네요!",
+  image_url: "http://via.placeholder.com/400x300",
+  contents: "contents",
   comment_cnt: 10,
-  insert_dt: "2022-04-05 11:27:00",
+  insert_dt: "2022-04-01 00:00:00",
   is_me: false,
 };
 
