@@ -116,7 +116,7 @@ const getCommentFB = (post_id = null) => {
   };
 };
 
-const removeCommentFB = (post_id, comment_id) => {
+const removeCommentFB = (post_id = null, comment_id = null) => {
   return function (dispatch, getState, { history }) {
     if (!comment_id) {
       return;
@@ -126,10 +126,24 @@ const removeCommentFB = (post_id, comment_id) => {
       .doc(comment_id)
       .delete()
       .then(() => {
-        dispatch(removeComment(comment_id));
-        console.log(comment_id, "삭제 완료");
+        const postDB = firestore.collection("post");
+        const post = getState().post.list.find((l) => l.id === post_id);
+
+        const increment = firebase.firestore.FieldValue.increment(-1);
+        postDB
+          .doc(post_id)
+          .update({ comment_cnt: increment })
+          .then((_post) => {
+            dispatch(removeComment(post_id, comment_id));
+            if (post) {
+              dispatch(
+                postActions.editPost(post_id, {
+                  comment_cnt: parseInt(post.comment_cnt) - 1,
+                })
+              );
+            }
+          });
       });
-    dispatch(removeComment(post_id, comment_id));
   };
 };
 
