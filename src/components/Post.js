@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, Image, Text } from "../elements";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { history } from "../redux/configureStore";
 
 import EditIcon from "@mui/icons-material/Edit";
@@ -8,8 +8,8 @@ import { deepOrange } from "@mui/material/colors";
 import IconButton from "@mui/material/IconButton";
 
 const Post = (props) => {
-  const { id } = useParams();
-  const identify = id && props.is_me;
+  const { pathname } = useLocation();
+  const identify = pathname !== "/" && props.is_me;
 
   return (
     <>

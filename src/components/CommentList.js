@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Grid, Image, Text } from "../elements";
+import { Grid, Image, Text, Button } from "../elements";
 
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as commentActions } from "../redux/modules/comment";
@@ -7,7 +7,9 @@ import { actionCreators as commentActions } from "../redux/modules/comment";
 const CommentList = (props) => {
   const dispatch = useDispatch();
   const comment_list = useSelector((state) => state.comment.list);
+  const user_info = useSelector((state) => state.user.user);
   const { post_id } = props;
+
 
   useEffect(() => {
     if (!comment_list[post_id]) {
@@ -23,7 +25,14 @@ const CommentList = (props) => {
     <>
       <Grid padding="16px">
         {comment_list[post_id].map((it) => {
-          return <CommentItem key={it.id} {...it} />;
+          return (
+            <CommentItem
+              key={it.id}
+              post_id={post_id}
+              {...it}
+              is_me={it.user_id === user_info.uid}
+            />
+          );
         })}
       </Grid>
     </>
@@ -37,7 +46,8 @@ CommentList.defaultProps = {
 export default CommentList;
 
 const CommentItem = (props) => {
-  const { user_name, contents, insert_dt } = props;
+  const { id, user_name, contents, insert_dt, is_me } = props;
+  const dispatch = useDispatch();
 
   return (
     <>
@@ -58,6 +68,11 @@ const CommentItem = (props) => {
         <Grid padding="0 8px">
           <Text margin="4px 0">{contents}</Text>
         </Grid>
+        {is_me && <Button
+        _onClick={() => {
+          dispatch(commentActions.removeCommentFB(props.post_id, id))
+        }}
+        >삭제</Button>}
       </Grid>
     </>
   );

@@ -9,6 +9,7 @@ import { actionCreators as postActions } from "./post";
 // actions
 const SET_COMMENT = "SET_COMMENT";
 const ADD_COMMENT = "ADD_COMMENT";
+const REMOVE_COMMENT = "REMOVE_COMMENT";
 const LOADING = "LOADING";
 
 // action creators
@@ -19,6 +20,10 @@ const setComment = createAction(SET_COMMENT, (post_id, comment_list) => ({
 const addComment = createAction(ADD_COMMENT, (post_id, comment) => ({
   post_id,
   comment,
+}));
+const removeComment = createAction(REMOVE_COMMENT, (post_id, comment_id) => ({
+  post_id,
+  comment_id,
 }));
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 
@@ -111,6 +116,23 @@ const getCommentFB = (post_id = null) => {
   };
 };
 
+const removeCommentFB = (post_id, comment_id) => {
+  return function (dispatch, getState, { history }) {
+    if (!comment_id) {
+      return;
+    }
+    const commentDB = firestore.collection("comment");
+    commentDB
+      .doc(comment_id)
+      .delete()
+      .then(() => {
+        dispatch(removeComment(comment_id));
+        console.log(comment_id, "삭제 완료");
+      });
+    dispatch(removeComment(post_id, comment_id));
+  };
+};
+
 // reducer
 export default handleActions(
   {
@@ -126,6 +148,13 @@ export default handleActions(
       produce(state, (draft) => {
         draft.is_loading = action.payload.is_loading;
       }),
+    [REMOVE_COMMENT]: (state, action) =>
+      produce(state, (draft) => {
+        let idx = action.payload.post_id;
+        draft.list[idx] = draft.list[idx].filter(
+          (it) => it.id !== action.payload.comment_id
+        );
+      }),
   },
   initialState
 );
@@ -136,6 +165,7 @@ const actionCreators = {
   setComment,
   addComment,
   addCommentFB,
+  removeCommentFB,
 };
 
 export { actionCreators };
