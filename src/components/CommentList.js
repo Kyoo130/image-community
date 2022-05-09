@@ -10,7 +10,6 @@ const CommentList = (props) => {
   const user_info = useSelector((state) => state.user.user);
   const { post_id } = props;
 
-
   useEffect(() => {
     if (!comment_list[post_id]) {
       dispatch(commentActions.getCommentFB(post_id));
@@ -30,7 +29,7 @@ const CommentList = (props) => {
               key={it.id}
               post_id={post_id}
               {...it}
-              is_me={it.user_id === user_info.uid}
+              is_me={it.user_id === user_info?.uid}
             />
           );
         })}
@@ -68,11 +67,15 @@ const CommentItem = (props) => {
         <Grid padding="0 8px">
           <Text margin="4px 0">{contents}</Text>
         </Grid>
-        {is_me && <Button
-        _onClick={() => {
-          dispatch(commentActions.removeCommentFB(props.post_id, id))
-        }}
-        >삭제</Button>}
+        {is_me && (
+          <Button
+            _onClick={() => {
+              dispatch(commentActions.removeCommentFB(props.post_id, id));
+            }}
+          >
+            삭제
+          </Button>
+        )}
       </Grid>
     </>
   );

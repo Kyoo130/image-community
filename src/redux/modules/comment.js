@@ -179,6 +179,7 @@ const actionCreators = {
   setComment,
   addComment,
   addCommentFB,
+  removeComment,
   removeCommentFB,
 };
 

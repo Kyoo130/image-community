@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Post, CommentList, CommentWrite } from "../components";
+import {Post, CommentList, CommentWrite, NotFound} from "../components";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import Permit from "../shared/Permit";
@@ -23,13 +23,19 @@ const PostDetail = (props) => {
 
   return (
     <>
-      {post && (
-        <Post {...post} is_me={post.user_info.user_id === user_info?.uid} />
+      {post ? (
+        <>
+          <Post {...post} is_me={post.user_info.user_id === user_info?.uid} />
+          <Permit>
+            <CommentWrite post_id={id} />
+          </Permit>
+          <CommentList post_id={id} />
+        </>
+      ) : (
+        <>
+          <NotFound />
+        </>
       )}
-      <Permit>
-        <CommentWrite post_id={id} />
-      </Permit>
-      <CommentList post_id={id} />
     </>
   );
 };
