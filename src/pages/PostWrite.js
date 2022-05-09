@@ -45,14 +45,22 @@ const PostWrite = (props) => {
     dispatch(postActions.editPostFB(post_id, { contents: contents }));
   };
 
+  const deletePost = () => {
+    dispatch(postActions.deletePostFB(post_id))
+  }
+
   if (!is_login) {
     return (
       <Grid margin="100px 0" padding="16px" center>
         <Text size="32px" bold color="#EC6237">
           앗! 잠깐!
         </Text>
-        <Text size="16px" color="#EC6237">로그인 후에만 글을 쓸 수 있어요!</Text>
-        <Button margin="24px 0" bold
+        <Text size="16px" color="#EC6237">
+          로그인 후에만 글을 쓸 수 있어요!
+        </Text>
+        <Button
+          margin="24px 0"
+          bold
           _onClick={() => {
             history.replace("/");
           }}
@@ -98,7 +106,10 @@ const PostWrite = (props) => {
 
       <Grid padding="8px 16px">
         {is_edit ? (
-          <Button bold text="게시글 수정" _onClick={editPost} />
+          <>
+            <Button bold text="게시글 수정" _onClick={editPost} />
+            <Button bold text="게시글 삭제" _onClick={deletePost} />
+          </>
         ) : (
           <Button bold text="게시글 작성" _onClick={addPost} />
         )}
