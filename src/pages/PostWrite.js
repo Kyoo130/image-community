@@ -46,8 +46,10 @@ const PostWrite = (props) => {
   };
 
   const deletePost = () => {
-    dispatch(postActions.deletePostFB(post_id))
-  }
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      dispatch(postActions.deletePostFB(post_id));
+    }
+  };
 
   if (!is_login) {
     return (
@@ -104,11 +106,16 @@ const PostWrite = (props) => {
         />
       </Grid>
 
-      <Grid padding="8px 16px">
+      <Grid is_flex padding="8px 16px">
         {is_edit ? (
           <>
-            <Button bold text="게시글 수정" _onClick={editPost} />
-            <Button bold text="게시글 삭제" _onClick={deletePost} />
+            <Button margin="0 4px 0 0" bold text="수 정" _onClick={editPost} />
+            <Button
+              margin="0 0 0 4px"
+              bold
+              text="삭 제"
+              _onClick={deletePost}
+            />
           </>
         ) : (
           <Button bold text="게시글 작성" _onClick={addPost} />
