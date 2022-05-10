@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import {Post, CommentList, CommentWrite, NotFound} from "../components";
+import { Post, CommentList, CommentWrite, NotFound } from "../components";
 import { useSelector, useDispatch } from "react-redux";
 import { actionCreators as postActions } from "../redux/modules/post";
 import Permit from "../shared/Permit";

@@ -64,18 +64,20 @@ const deletePostFB = (post_id = null) => {
             .doc(doc.id)
             .delete()
             .then(() => {
-              dispatch(commentActions.removeComment(post_id, doc.id))
-            }).catch((err) => {
-            window.alert("댓글 삭제에 문제가 있습니다.");
-            console.log("댓글 삭제에 실패했어요!", err);
-          })
+              dispatch(commentActions.removeComment(post_id, doc.id));
+            })
+            .catch((err) => {
+              window.alert("댓글 삭제에 문제가 있습니다.");
+              console.log("댓글 삭제에 실패했어요!", err);
+            });
         });
-        dispatch(deletePost(post_id))
+        dispatch(deletePost(post_id));
         history.replace("/");
-      }).catch((err) => {
-      window.alert("게시글 삭제에 문제가 있습니다.");
-      console.log("게시글 삭제에 실패했어요!", err);
-    })
+      })
+      .catch((err) => {
+        window.alert("게시글 삭제에 문제가 있습니다.");
+        console.log("게시글 삭제에 실패했어요!", err);
+      });
   };
 };
 

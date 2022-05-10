@@ -38,9 +38,7 @@ const ImageDefault = styled.div`
   --size: ${(props) => props.size}px;
   width: var(--size);
   height: var(--size);
-  background-image: url("${(props) => props.src}");
-  background-size: cover;
-  background-position: center;
+  background: url("${(props) => props.src}") center center / cover no-repeat;
 `;
 
 const AspectOuter = styled.div`

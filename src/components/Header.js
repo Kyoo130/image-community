@@ -2,11 +2,11 @@ import React from "react";
 import { Grid, Text } from "../elements";
 import NotiBadge from "./NotiBadge";
 
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import LoginIcon from "@mui/icons-material/Login";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
+import HomeIcon from "@mui/icons-material/Home";
 
 import { deepOrange } from "@mui/material/colors";
 import IconButton from "@mui/material/IconButton";
@@ -29,6 +29,7 @@ const Header = () => {
       <>
         <Grid is_flex padding="12px 16px" border_bt="2px solid #eee">
           <Grid
+            cursor="default"
             _onClick={() => {
               history.push("/");
             }}
@@ -39,6 +40,16 @@ const Header = () => {
           </Grid>
 
           <Grid is_flex>
+            <IconButton
+              aria-label="Example"
+              sx={{ color: deepOrange[400] }}
+              onClick={() => {
+                history.push("/");
+              }}
+            >
+              <HomeIcon />
+            </IconButton>
+
             <IconButton
               aria-label="Example"
               sx={{ color: deepOrange[400] }}
@@ -61,16 +72,6 @@ const Header = () => {
               aria-label="Example"
               sx={{ color: deepOrange[400] }}
               onClick={() => {
-                history.push("/");
-              }}
-            >
-              <AccountCircleIcon />
-            </IconButton>
-
-            <IconButton
-              aria-label="Example"
-              sx={{ color: deepOrange[400] }}
-              onClick={() => {
                 dispatch(userActions.logoutFB());
               }}
             >
@@ -86,6 +87,7 @@ const Header = () => {
     <>
       <Grid is_flex padding="12px 16px" border_bt="2px solid #eee">
         <Grid
+          cursor="default"
           _onClick={() => {
             history.push("/");
           }}

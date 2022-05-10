@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
-import { Grid, Image, Text, Button } from "../elements";
-
+import { Grid, Image, Text } from "../elements";
 import { useDispatch, useSelector } from "react-redux";
+
+import DeleteIcon from "@mui/icons-material/Delete";
 import { actionCreators as commentActions } from "../redux/modules/comment";
+import { deepOrange } from "@mui/material/colors";
+import IconButton from "@mui/material/IconButton";
 
 const CommentList = (props) => {
   const dispatch = useDispatch();
@@ -63,19 +66,23 @@ const CommentItem = (props) => {
               {insert_dt}
             </Text>
           </Grid>
+          {is_me && (
+            <IconButton
+              aria-label="Example"
+              sx={{ color: deepOrange[400] }}
+              onClick={() => {
+                if (window.confirm("정말 삭제하시겠습니까?")) {
+                  dispatch(commentActions.removeCommentFB(props.post_id, id));
+                }
+              }}
+            >
+              <DeleteIcon />
+            </IconButton>
+          )}
         </Grid>
         <Grid padding="0 8px">
           <Text margin="4px 0">{contents}</Text>
         </Grid>
-        {is_me && (
-          <Button
-            _onClick={() => {
-              dispatch(commentActions.removeCommentFB(props.post_id, id));
-            }}
-          >
-            삭제
-          </Button>
-        )}
       </Grid>
     </>
   );
