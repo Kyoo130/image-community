@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Image, Text } from "../elements";
+import { Grid, Text } from "../elements";
 import { Card } from "../components";
 
 import { realtime } from "../shared/firebase";
@@ -36,7 +36,10 @@ const Notification = (props) => {
 
   return (
     <>
-      <Grid padding="16px" bg="#EFF6FF">
+      <Grid padding="16px">
+        <Text size="24px" bold color="#EC6237">
+          댓글 알림
+        </Text>
         {noti.map((n, idx) => {
           return <Card key={`noti_${idx}`} {...n} />;
         })}

@@ -41,7 +41,7 @@ const Signup = () => {
   return (
     <>
       <Grid padding="16px">
-        <Text size="32px" bold>
+        <Text size="24px" bold color="#EC6237">
           회원가입
         </Text>
 
@@ -87,12 +87,15 @@ const Signup = () => {
           />
         </Grid>
 
-        <Button text="회원가입하기" _onClick={signup} />
+        <Button
+          margin="16px 0 0 0"
+          bold
+          text="회원가입하기"
+          _onClick={signup}
+        />
       </Grid>
     </>
   );
 };
-
-Signup.defaultProps = {};
 
 export default Signup;

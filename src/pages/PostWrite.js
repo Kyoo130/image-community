@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Grid, Text, Button, Image, Input } from "../elements";
 import Upload from "../shared/Upload";
 
@@ -19,13 +19,12 @@ const PostWrite = (props) => {
 
   let _post = is_edit ? post_list.find((p) => p.id === post_id) : null;
 
-  const [contents, setContents] = React.useState(_post ? _post.contents : "");
+  const [contents, setContents] = useState(_post ? _post.contents : "");
 
   useEffect(() => {
     if (is_edit && !_post) {
       console.log("포스트 정보가 없어요!");
       history.goBack();
-
       return;
     }
 
@@ -46,19 +45,27 @@ const PostWrite = (props) => {
     dispatch(postActions.editPostFB(post_id, { contents: contents }));
   };
 
+  const deletePost = () => {
+    dispatch(postActions.deletePostFB(post_id))
+  }
+
   if (!is_login) {
     return (
       <Grid margin="100px 0" padding="16px" center>
-        <Text size="32px" bold>
+        <Text size="32px" bold color="#EC6237">
           앗! 잠깐!
         </Text>
-        <Text size="16px">로그인 후에만 글을 쓸 수 있어요!</Text>
+        <Text size="16px" color="#EC6237">
+          로그인 후에만 글을 쓸 수 있어요!
+        </Text>
         <Button
+          margin="24px 0"
+          bold
           _onClick={() => {
             history.replace("/");
           }}
         >
-          로그인 하러가기
+          돌아가기
         </Button>
       </Grid>
     );
@@ -67,7 +74,7 @@ const PostWrite = (props) => {
   return (
     <>
       <Grid padding="16px">
-        <Text margin="0px" size="36px" bold>
+        <Text size="24px" bold color="#EC6237">
           {is_edit ? "게시글 수정" : "게시글 작성"}
         </Text>
         <Upload />
@@ -75,32 +82,36 @@ const PostWrite = (props) => {
 
       <Grid>
         <Grid padding="16px">
-          <Text margin="0px" size="24px" bold>
+          <Text margin="0px 0 8px 0" size="18px" bold color="#EC6237">
             미리보기
           </Text>
+          <Image
+            shape="rectangle"
+            src={preview ? preview : "http://via.placeholder.com/400x300"}
+          />
         </Grid>
-
-        <Image
-          shape="rectangle"
-          src={preview ? preview : "http://via.placeholder.com/400x300"}
-        />
       </Grid>
 
       <Grid padding="16px">
+        <Text margin="0px 0 8px 0" size="18px" bold color="#EC6237">
+          미리보기
+        </Text>
         <Input
           value={contents}
           _onChange={changeContents}
-          label="게시글 내용"
-          placeholder="게시글 작성"
+          placeholder="작성할 내용을 입력해 주세요."
           multiLine
         />
       </Grid>
 
-      <Grid padding="16px">
+      <Grid padding="8px 16px">
         {is_edit ? (
-          <Button text="게시글 수정" _onClick={editPost} />
+          <>
+            <Button bold text="게시글 수정" _onClick={editPost} />
+            <Button bold text="게시글 삭제" _onClick={deletePost} />
+          </>
         ) : (
-          <Button text="게시글 작성" _onClick={addPost} />
+          <Button bold text="게시글 작성" _onClick={addPost} />
         )}
       </Grid>
     </>

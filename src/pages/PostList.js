@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { Post } from "../components";
 import { Grid } from "../elements";
 import InfinityScroll from "../shared/InfinityScroll";
@@ -23,8 +23,7 @@ const PostList = (props) => {
 
   return (
     <>
-      <Grid bg={"#EFF6FF"} padding="20px 0">
-        {/* <Post/> */}
+      <Grid padding="16px 8px">
         <InfinityScroll
           callNext={() => {
             dispatch(postActions.getPostFB(paging.next));
@@ -32,7 +31,7 @@ const PostList = (props) => {
           is_next={!!paging.next}
           loading={is_loading}
         >
-          {post_list.map((p, idx) => {
+          {post_list.map((p) => {
             if (p.user_info.user_id === user_info?.uid) {
               return (
                 <Grid

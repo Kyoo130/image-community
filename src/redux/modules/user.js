@@ -43,6 +43,7 @@ const loginFB = (id, pwd) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           console.log(errorCode, errorMessage);
+          alert("아이디 또는 비밀번호가 올바르지 않습니다.");
         });
     });
   };
@@ -77,6 +78,7 @@ const signupFB = (id, pwd, user_name) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
+        alert("아이디(이메일) 정보가 올바르지 않습니다.");
       });
   };
 };

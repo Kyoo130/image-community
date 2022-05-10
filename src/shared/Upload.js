@@ -33,7 +33,9 @@ const Upload = () => {
         ref={fileInput}
         disabled={is_uploading}
       />
-      <Button _onClick={uploadFB}>업로드하기</Button>
+      <Button margin="24px 0 0 0" bold _onClick={uploadFB}>
+        업로드하기
+      </Button>
     </>
   );
 };

@@ -5,11 +5,13 @@ import "moment";
 import moment from "moment";
 
 import { actionCreators as imageActions } from "./image";
+import { actionCreators as commentActions } from "./comment";
 
 // actions
 const SET_POST = "SET_POST";
 const ADD_POST = "ADD_POST";
 const EDIT_POST = "EDIT_POST";
+const DELETE_POST = "DELETE_POST";
 const LOADING = "LOADING";
 
 // action creators
@@ -22,6 +24,11 @@ const editPost = createAction(EDIT_POST, (post_id, post) => ({
   post_id,
   post,
 }));
+const deletePost = createAction(DELETE_POST, (post_id, comment) => ({
+  post_id,
+  comment,
+}));
+
 const loading = createAction(LOADING, (is_loading) => ({ is_loading }));
 
 // initialState
@@ -32,14 +39,48 @@ const initialState = {
 };
 
 const initialPost = {
-  image_url:
-    "https://cdn.pixabay.com/photo/2016/02/10/16/37/cat-1192026_1280.jpg",
-  contents: "고양이네요!",
+  image_url: "http://via.placeholder.com/400x300",
+  contents: "Post Test!!!",
   comment_cnt: 0,
   insert_dt: moment().format("YYYY-MM-DD hh:mm:ss"),
 };
 
 // middleware actions
+const deletePostFB = (post_id = null) => {
+  return function (dispatch, getState, { history }) {
+    if (!post_id) {
+      return;
+    }
+    const postDB = firestore.collection("post");
+
+    postDB
+      .doc(post_id)
+      .delete()
+      .then(() => {
+        const commentDB = firestore.collection("comment");
+        const comment = getState().comment.list[post_id];
+        comment.forEach((doc) => {
+          commentDB
+            .doc(doc.id)
+            .delete()
+            .then(() => {
+              dispatch(commentActions.removeComment(post_id, doc.id));
+            })
+            .catch((err) => {
+              window.alert("댓글 삭제에 문제가 있습니다.");
+              console.log("댓글 삭제에 실패했어요!", err);
+            });
+        });
+        dispatch(deletePost(post_id));
+        history.replace("/");
+      })
+      .catch((err) => {
+        window.alert("게시글 삭제에 문제가 있습니다.");
+        console.log("게시글 삭제에 실패했어요!", err);
+      });
+  };
+};
+
 const editPostFB = (post_id = null, post = {}) => {
   return function (dispatch, getState, { history }) {
     if (!post_id) {
@@ -160,7 +201,7 @@ const getPostFB = (start = null, size = 3) => {
 
     let query = postDB.orderBy("insert_dt", "desc");
 
-    if(start){
+    if (start) {
       query = query.startAt(start);
     }
 
@@ -172,9 +213,12 @@ const getPostFB = (start = null, size = 3) => {
 
         let paging = {
           start: docs.docs[0],
-          next: docs.docs.length === size+1? docs.docs[docs.docs.length -1] : null,
+          next:
+            docs.docs.length === size + 1
+              ? docs.docs[docs.docs.length - 1]
+              : null,
           size: size,
-        }
+        };
 
         docs.forEach((doc) => {
           let _post = doc.data();
@@ -200,7 +244,7 @@ const getPostFB = (start = null, size = 3) => {
 };
 
 const getOnePostFB = (id) => {
-  return function(dispatch, getState, {history}){
+  return function (dispatch, getState, { history }) {
     const postDB = firestore.collection("post");
     postDB
       .doc(id)
@@ -225,8 +269,8 @@ const getOnePostFB = (id) => {
 
         dispatch(setPost([post]));
       });
-  }
-}
+  };
+};
 
 export default handleActions(
   {
@@ -235,22 +279,20 @@ export default handleActions(
         draft.list.push(...action.payload.post_list);
 
         draft.list = draft.list.reduce((acc, cur) => {
-          if(acc.findIndex(a => a.id === cur.id) === -1){
+          if (acc.findIndex((a) => a.id === cur.id) === -1) {
             return [...acc, cur];
-          }else{
+          } else {
             acc[acc.findIndex((a) => a.id === cur.id)] = cur;
             return acc;
           }
         }, []);
 
-
-        if(action.payload.paging){
+        if (action.payload.paging) {
           draft.paging = action.payload.paging;
         }
-        
+
         draft.is_loading = false;
       }),
-
     [ADD_POST]: (state, action) =>
       produce(state, (draft) => {
         draft.list.unshift(action.payload.post);
@@ -261,9 +303,16 @@ export default handleActions(
 
         draft.list[idx] = { ...draft.list[idx], ...action.payload.post };
       }),
-      [LOADING]: (state, action) => produce(state, (draft) => {
+    [DELETE_POST]: (state, action) =>
+      produce(state, (draft) => {
+        draft.list = draft.list.filter(
+          (it) => it.id !== action.payload.post_id
+        );
+      }),
+    [LOADING]: (state, action) =>
+      produce(state, (draft) => {
         draft.is_loading = action.payload.is_loading;
-      })
+      }),
   },
   initialState
 );
@@ -276,6 +325,7 @@ const actionCreators = {
   addPostFB,
   editPostFB,
   getOnePostFB,
+  deletePostFB,
 };
 
 export { actionCreators };

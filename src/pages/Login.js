@@ -28,7 +28,7 @@ const Login = () => {
   return (
     <>
       <Grid padding="16px">
-        <Text size="32px" bold>
+        <Text size="24px" bold color="#EC6237">
           로그인
         </Text>
         <Grid padding="16px 0">
@@ -53,7 +53,7 @@ const Login = () => {
             onSubmit={login}
           />
         </Grid>
-        <Button text="로그인하기" _onClick={login} />
+        <Button margin="16px 0 0 0" bold text="로그인하기" _onClick={login} />
       </Grid>
     </>
   );
