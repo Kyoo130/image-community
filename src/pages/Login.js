@@ -33,8 +33,8 @@ const Login = () => {
         </Text>
         <Grid padding="16px 0">
           <Input
-            label="아이디"
-            placeholder="아이디를 입력해주세요."
+            label="아이디(Email)"
+            placeholder="Email 주소 형식의 아이디를 입력해주세요."
             _onChange={(e) => {
               setId(e.target.value);
             }}

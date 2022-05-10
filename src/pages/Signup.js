@@ -47,8 +47,8 @@ const Signup = () => {
 
         <Grid padding="16px 0">
           <Input
-            label="아이디"
-            placeholder="아이디를 입력해주세요."
+            label="아이디(Email)"
+            placeholder="Email 주소 형식의 아이디를 입력해주세요."
             _onChange={(e) => {
               setId(e.target.value);
             }}
@@ -58,7 +58,7 @@ const Signup = () => {
         <Grid padding="16px 0">
           <Input
             label="닉네임"
-            placeholder="닉네임을 입력해주세요."
+            placeholder="사용을 원하는 닉네임을 입력해주세요."
             _onChange={(e) => {
               setUserName(e.target.value);
             }}
@@ -68,7 +68,7 @@ const Signup = () => {
         <Grid padding="16px 0">
           <Input
             label="비밀번호"
-            placeholder="비밀번호를 입력해주세요."
+            placeholder="특수문자를 포함한 8자리 이상의 비밀번호를 입력해주세요."
             type="password"
             _onChange={(e) => {
               setPwd(e.target.value);
@@ -79,7 +79,7 @@ const Signup = () => {
         <Grid padding="16px 0">
           <Input
             label="비밀번호 확인"
-            placeholder="비밀번호를 다시 입력해주세요."
+            placeholder="특수문자를 포함한 8자리 이상의 비밀번호를 다시 입력해주세요."
             type="password"
             _onChange={(e) => {
               setPwdCheck(e.target.value);

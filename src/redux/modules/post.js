@@ -101,6 +101,7 @@ const editPostFB = (post_id = null, post = {}) => {
         .update(post)
         .then(() => {
           dispatch(editPost(post_id, { ...post }));
+          window.alert("게시글 수정이 완료되었습니다.");
           history.replace("/");
         });
 
@@ -170,6 +171,7 @@ const addPostFB = (contents = "") => {
             .then((doc) => {
               let post = { user_info, ..._post, id: doc.id, image_url: url };
               dispatch(addPost(post));
+              window.alert("게시글 작성이 완료되었습니다.");
               history.replace("/");
 
               dispatch(imageActions.setPreview(null));

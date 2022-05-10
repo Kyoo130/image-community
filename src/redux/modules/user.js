@@ -37,13 +37,16 @@ const loginFB = (id, pwd) => {
               uid: user.user.uid,
             })
           );
+          window.alert(
+            "로그인이 완료되었습니다.\n이제 게시글과 댓글을 작성할 수 있어요!"
+          );
           history.push("/");
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           console.log(errorCode, errorMessage);
-          alert("아이디 또는 비밀번호가 올바르지 않습니다.");
+          window.alert("아이디 또는 비밀번호가 올바르지 않습니다.");
         });
     });
   };
@@ -68,6 +71,9 @@ const signupFB = (id, pwd, user_name) => {
                 uid: user.user.uid,
               })
             );
+            window.alert(
+              "회원가입이 완료되었습니다.\n가입한 정보로 로그인을 시도해주세요."
+            );
             history.push("/login");
           })
           .catch((error) => {
@@ -78,7 +84,7 @@ const signupFB = (id, pwd, user_name) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
-        alert("아이디(이메일) 정보가 올바르지 않습니다.");
+        window.alert("아이디(이메일) 정보가 올바르지 않습니다.");
       });
   };
 };
@@ -106,6 +112,7 @@ const logoutFB = () => {
   return function (dispatch, getState, { history }) {
     auth.signOut().then(() => {
       dispatch(logOut());
+      window.alert("로그아웃이 완료되었습니다.");
       history.replace("/");
     });
   };
