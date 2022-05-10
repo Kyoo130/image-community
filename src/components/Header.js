@@ -29,7 +29,6 @@ const Header = () => {
       <>
         <Grid is_flex padding="12px 16px" border_bt="2px solid #eee">
           <Grid
-            cursor="default"
             _onClick={() => {
               history.push("/");
             }}
@@ -87,7 +86,6 @@ const Header = () => {
     <>
       <Grid is_flex padding="12px 16px" border_bt="2px solid #eee">
         <Grid
-          cursor="default"
           _onClick={() => {
             history.push("/");
           }}

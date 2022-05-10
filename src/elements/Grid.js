@@ -11,7 +11,6 @@ const Grid = (props) => {
     border_bt,
     children,
     center,
-    cursor,
     _onClick,
   } = props;
 
@@ -23,7 +22,6 @@ const Grid = (props) => {
     bg: bg,
     center: center,
     border_bt: border_bt,
-    cursor: cursor,
   };
   return (
     <>
@@ -60,7 +58,6 @@ const GridBox = styled.div`
       ? `display: flex; align-items: center; justify-content: space-between; `
       : ""}
   ${(props) => (props.center ? `text-align: center;` : "")}
-  ${(props) => (props.cursor ? `cursor: ${props.cursor};` : "")}
 `;
 
 export default Grid;
